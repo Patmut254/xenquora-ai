@@ -1,21 +1,22 @@
-import React from "react";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import './styles.css'
+import App from './App.jsx'
+import { NotificationProvider } from './context/NotificationContext.jsx'
 
-import ReactDOM from "react-dom/client";
+// Apply saved theme immediately on boot
+const savedTheme = localStorage.getItem("xenq_theme") || "dark";
+const themeBg = { dark: "#050816", midnight: "#000008" };
+document.body.style.background = themeBg[savedTheme] || "#050816";
+document.documentElement.setAttribute("data-theme", savedTheme);
 
-import { BrowserRouter } from "react-router-dom";
-
-import App from "./App";
-
-import "./styles.css";
-
-import { NotificationProvider } from "./context/NotificationContext";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <NotificationProvider>
-      <BrowserRouter>
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <NotificationProvider>
         <App />
-      </BrowserRouter>
-    </NotificationProvider>
-  </React.StrictMode>,
-);
+      </NotificationProvider>
+    </BrowserRouter>
+  </StrictMode>,
+)
