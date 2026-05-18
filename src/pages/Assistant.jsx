@@ -58,9 +58,13 @@ export default function Assistant() {
       console.error("Gemini Error:", error);
 
       if (error.message?.includes("429")) {
-        setError("AI quota exceeded. Please wait and try again.");
+        setError(
+          "Gemini rate limit exceeded. Please wait 30 seconds and try again.",
+        );
+      } else if (error.message?.includes("404")) {
+        setError("Gemini model configuration is invalid.");
       } else {
-        setError("Failed to generate AI response.");
+        setError(error.message || "Failed to generate AI response.");
       }
     } finally {
       setLoading(false);
